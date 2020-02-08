@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from "react";
-import {Card, Image, Button, Grid} from "semantic-ui-react";
+import {Grid} from "semantic-ui-react";
 import ActivityStore from "../../../app/stores/ActivityStore";
 import {observer} from "mobx-react-lite";
 import {RouteComponentProps} from "react-router-dom";
@@ -28,7 +28,7 @@ const ActivityDetails: React.FC<RouteComponentProps<DetailParams>> = ({match, hi
         <Grid>
             <Grid.Column width={10}>
                 <ActivityDetailedHeader activity={activity} />
-                <ActivityDetailedInfo />
+                <ActivityDetailedInfo activity={activity}/>
                 <ActivityDetailedChat />
             </Grid.Column>
             <Grid.Column width={6}>

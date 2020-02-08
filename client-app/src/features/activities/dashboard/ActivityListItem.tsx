@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Item, Label, Segment, Icon} from "semantic-ui-react";
+import {Button, Item, Segment, Icon} from "semantic-ui-react";
 import {Link} from "react-router-dom";
 import {IActivity} from "../../../app/models/activity";
 

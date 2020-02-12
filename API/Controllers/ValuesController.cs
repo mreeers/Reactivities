@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -29,10 +26,16 @@ namespace API.Controllers
         }
 
         // GET: api/Values/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<string>> Get(int id)
         {
             var value = await _context.Values.FindAsync(id);
+            
+            if(value == null)
+            {
+                return NotFound();
+            }
+
             return Ok(value);
         }
 

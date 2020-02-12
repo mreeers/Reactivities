@@ -19,7 +19,7 @@ const activityTextStyle = {
 const ActivityDetailedHeader: React.FC<{activity: IActivity}> = ({activity}) => {
     return(
         <Segment.Group>
-            <Segment basix attached={'top'} style={{padding: '0'}}>
+            <Segment basic attached={'top'} style={{padding: '0'}}>
                 <Image src={`/assets/categoryImages/${activity.category}.jpg`} fluid style={activityImageStyle} />
                 <Segment basic style={activityTextStyle}>
                     <Item.Group>

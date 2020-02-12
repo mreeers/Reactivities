@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using Application.Errors;
+using MediatR;
 using Persistence;
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -27,7 +29,7 @@ namespace Application.Activities
                 var activity = await _context.Activities.FindAsync(request.Id);
 
                 if (activity == null)
-                    throw new Exception("Could not find activity");
+                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
 
                 _context.Remove(activity);
 
@@ -36,7 +38,7 @@ namespace Application.Activities
                 if (success)
                     return Unit.Value;
 
-                throw new Exception("Problem savimg changes");
+                throw new Exception("Problem saving changes");
 
             }
         }

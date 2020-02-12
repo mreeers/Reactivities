@@ -21,9 +21,9 @@ namespace Application.Activities
             public string Venue { get; set; }
         }
 
-        public class CommandValidarot : AbstractValidator<Command>
+        public class CommandValidator : AbstractValidator<Command>
         {
-            public CommandValidarot()
+            public CommandValidator()
             {
                 RuleFor(x => x.Title).NotEmpty();
                 RuleFor(x => x.Description).NotEmpty();

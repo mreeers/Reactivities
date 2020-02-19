@@ -1,10 +1,13 @@
 using API.Middleware;
 using Application.Activities;
+using Domain;
 using FluentValidation.AspNetCore;
+using Infrastructure.Interfaces;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,7 +41,8 @@ namespace API
 
             services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddMvc().AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>());
-                
+            services.AddDefaultIdentity<AppUser>().AddEntityFrameworkStores<DataContext>();
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

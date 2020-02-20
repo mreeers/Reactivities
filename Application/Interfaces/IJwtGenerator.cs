@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Infrastructure.Interfaces
+namespace Application.Interfaces
 {
     public interface IJwtGenerator
     {
-        string Create(AppUser user);
+        string CreateToken(AppUser user);
     }
 }

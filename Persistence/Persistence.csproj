@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200418202354_UserActivityAdd.cs" />
+    <Compile Remove="Migrations\20200418202354_UserActivityAdd.Designer.cs" />
+    <Compile Remove="Migrations\20200418212355_UserActivityAdded.cs" />
+    <Compile Remove="Migrations\20200418212355_UserActivityAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200418213129_UserActivityAdded.cs" />
+    <Compile Remove="Migrations\20200418213129_UserActivityAdded.Designer.cs" />
+    <Compile Remove="Migrations\20200418213726_UserActivityAdded.cs" />
+    <Compile Remove="Migrations\20200418213726_UserActivityAdded.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />

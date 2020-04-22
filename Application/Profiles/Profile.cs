@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Domain;
 using System.Collections.Generic;
 
-namespace Domain
+namespace Application.Profiles
 {
-    public class AppUser : IdentityUser
+    public class Profile
     {
         public string DisplayName { get; set; }
+        public string UserName { get; set; }
+        public string Image { get; set; }
         public string Bio { get; set; }
-        public virtual ICollection<UserActivity> UserActivities { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
     }
 }

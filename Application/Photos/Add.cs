@@ -39,8 +39,8 @@ namespace Application.Photos
                 var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetCurrentUsermane());
                 var photo = new Photo
                 {
-                    Id = photoUploadResult.Url,
-                    Url = photoUploadResult.PublicId
+                    Id = photoUploadResult.PublicId,
+                    Url = photoUploadResult.Url
                 };
 
                 if (!user.Photos.Any(x => x.IsMain))

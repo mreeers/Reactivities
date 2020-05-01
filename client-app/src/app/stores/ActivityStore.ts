@@ -1,11 +1,14 @@
-import {observable, action, computed, runInAction} from 'mobx';
+import {action, computed, observable, runInAction} from 'mobx';
 import {SyntheticEvent} from 'react';
 import {IActivity} from '../models/activity';
 import agent from '../api/agent';
 import {history} from '../..';
 import {toast} from 'react-toastify';
 import {RootStore} from "./rootStore";
-import {setActivityProps, createAttendee} from "../common/util/util";
+import {createAttendee, setActivityProps} from "../common/util/util";
+import {HubConnection, HubConnectionBuilder, LogLevel} from "@aspnet/signalr";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 export default class ActivityStore {
   rootStore: RootStore;
@@ -20,10 +23,27 @@ export default class ActivityStore {
   @observable submitting = false;
   @observable target = '';
   @observable loading = false;
+  @observable.ref hubConnection: HubConnection | null = null;
+
+  @action createHubConnection = () => {
+    this.hubConnection = new HubConnectionBuilder()
+        .withUrl('http://localhost:5000/chat', {accessTokenFactory: () => this.rootStore.commonStore.token!
+        })
+        .configureLogging(LogLevel.Information)
+        .build();
+    this.hubConnection.start().then(() => console.log(this.hubConnection!.state)).catch(error => console.log('Error establishing connection ' , error));
+    this.hubConnection.on('ReceiveComment',comment => {
+      this.activity!.comments.push(comment)
+    })
+  };
 
   @computed get activitiesByDate() {
     return this.groupActivitiesByDate(Array.from(this.activityRegistry.values()))
   }
+
+  @action stopHubConnections = () => {
+    this.hubConnection!.stop();
+  };
 
   groupActivitiesByDate(activities: IActivity[]) {
     const sortedActivities = activities.sort(

@@ -53,6 +53,8 @@ namespace API
             services.AddMediatR(typeof(List.Handler).Assembly);
 
             services.AddAutoMapper(typeof(List.Handler));
+
+            services.AddSignalR();
             
             services.AddMvc(opt => 
             {
@@ -112,6 +114,8 @@ namespace API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSignalR(routes => { routes.MapHub<ChatHub>("/chat"); }); 
 
             app.UseEndpoints(endpoints =>
             {

@@ -7,8 +7,6 @@ import {toast} from 'react-toastify';
 import {RootStore} from "./rootStore";
 import {createAttendee, setActivityProps} from "../common/util/util";
 import {HubConnection, HubConnectionBuilder, LogLevel} from "@aspnet/signalr";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 
 export default class ActivityStore {
   rootStore: RootStore;
@@ -41,8 +39,17 @@ export default class ActivityStore {
     return this.groupActivitiesByDate(Array.from(this.activityRegistry.values()))
   }
 
-  @action stopHubConnections = () => {
+  @action stopHubConnection = () => {
     this.hubConnection!.stop();
+  };
+
+  @action addComment = async (values: any) => {
+    values.activityId = this.activity!.id;
+    try {
+      await this.hubConnection!.invoke('SendComment', values);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   groupActivitiesByDate(activities: IActivity[]) {

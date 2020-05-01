@@ -35,6 +35,6 @@ const DateInput: React.FC<IProps> = ({
         )}
       </Form.Field>
     )
-}
+};
 
 export default DateInput

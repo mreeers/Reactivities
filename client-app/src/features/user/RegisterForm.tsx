@@ -1,11 +1,11 @@
 import React, {useContext} from "react";
 import {Form as FinalForm, Field} from 'react-final-form';
 import {Form, Button, Header} from "semantic-ui-react";
-import TextInput from "../../../app/common/form/TextInput";
-import {RootStoreContext} from "../../../app/stores/rootStore";
-import {IUserFormValues} from "../../../app/models/user";
+import TextInput from "../../app/common/form/TextInput";
+import {RootStoreContext} from "../../app/stores/rootStore";
+import {IUserFormValues} from "../../app/models/user";
 import {FORM_ERROR} from "final-form";
-import ErrorMessage from "../../../app/common/form/ErrorMessage";
+import ErrorMessage from "../../app/common/form/ErrorMessage";
 
 const RegisterForm = () => {
   const rootStore = useContext(RootStoreContext);

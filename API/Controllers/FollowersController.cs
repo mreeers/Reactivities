@@ -22,6 +22,7 @@ namespace API.Controllers
 
         [HttpDelete("{username}/follow")]
         public async Task<ActionResult<Unit>> Unfollow(string username)
+        
         {
             return await Mediator.Send(new Delete.Command { Username = username });
         }

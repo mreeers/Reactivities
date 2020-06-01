@@ -16,7 +16,7 @@ interface IProps extends RouteComponentProps<RouteParams>{
 
 const ProfilePage: React.FC<IProps> = ({match}) => {
   const rootStore = useContext(RootStoreContext);
-  const {loadingProfile, profile, loadProfile} = rootStore.profileStore;
+  const {loadingProfile, profile, loadProfile, follow, unfollow, isCurrentUser, loading} = rootStore.profileStore;
 
   useEffect(() => {
     loadProfile(match.params.username)
@@ -25,10 +25,12 @@ const ProfilePage: React.FC<IProps> = ({match}) => {
   if(loadingProfile)
     return <LoadingComponent content={'Loading profile...'} />;
 
+  if (!profile) return <h2>Problem loading profile</h2>;
+
   return(
       <Grid>
         <Grid.Column width={16}>
-          <ProfileHeader profile={profile!} />
+          <ProfileHeader profile={profile!} isCurrentUser={isCurrentUser} loading={loading} follow={follow} unfollow={unfollow} />
           <ProfileContent />
         </Grid.Column>
       </Grid>

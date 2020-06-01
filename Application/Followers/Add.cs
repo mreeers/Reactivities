@@ -1,6 +1,5 @@
 ﻿using Application.Errors;
 using Application.Interfaces;
-using Application.User;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -42,12 +41,17 @@ namespace Application.Followers
 
                 var following = await _context.Followings.SingleOrDefaultAsync(x => x.ObserverId == observer.Id && x.TargetId == target.Id);
 
-                if (following == null)
-                    throw new RestException(System.Net.HttpStatusCode.BadRequest, new { User = "You are not following this user" });
+                if (following != null)
+                    throw new RestException(System.Net.HttpStatusCode.BadRequest, new { User = "You are already following this user" });
 
                 if (following == null)
                 {
-                    _context.Followings.Remove(following);
+                    following = new UserFollowing
+                    {
+                        Observer = observer,
+                        Target = target
+                    };
+                    _context.Followings.Add(following);
                 }
 
                 var success = await _context.SaveChangesAsync() > 0;

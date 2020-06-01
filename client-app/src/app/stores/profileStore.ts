@@ -16,7 +16,6 @@ export default class ProfileStore {
   @observable loading = false;
 
   @computed get isCurrentUser() {
-    debugger
     if (this.rootStore.userStore.user && this.profile) {
       return this.rootStore.userStore.user.username === this.profile.userName
     } else {
@@ -130,6 +129,7 @@ export default class ProfileStore {
   }
 
   @action unfollow = async (username: string) => {
+    debugger
     this.loading = true;
     try {
       await agent.Profiles.unfollow(username);

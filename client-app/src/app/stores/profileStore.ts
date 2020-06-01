@@ -1,5 +1,5 @@
 import {RootStore} from "./rootStore";
-import {action, observable, runInAction, computed} from "mobx";
+import {action, observable, runInAction, computed, reaction} from "mobx";
 import {IPhoto, IProfile} from "../models/profile";
 import agent from "../api/agent";
 import {toast} from "react-toastify";
@@ -7,7 +7,16 @@ import {toast} from "react-toastify";
 export default class ProfileStore {
   rootStore: RootStore;
   constructor(rootStore: RootStore) {
-    this.rootStore = rootStore
+    this.rootStore = rootStore;
+
+    reaction(() => this.activeTab, activeTab => {
+      if (activeTab === 3 || activeTab === 4) {
+        const predicate = activeTab === 3 ? 'followers' : 'following';
+        this.loadFollowings(predicate)
+      } else {
+        this.followings = [];
+      }
+    })
   }
 
   @observable profile: IProfile | null = null;
@@ -15,6 +24,7 @@ export default class ProfileStore {
   @observable uploadingPhoto = false;
   @observable loading = false;
   @observable followings: IProfile[] = [];
+  @observable activeTab: number = 0;
 
   @computed get isCurrentUser() {
     if (this.rootStore.userStore.user && this.profile) {
@@ -23,6 +33,10 @@ export default class ProfileStore {
       return false;
     }
   }
+
+  @action setActiveTab = (activeIndex: number) => {
+    this.activeTab = activeIndex;
+  };
 
   @action loadProfile = async (username: string) => {
     this.loadingProfile = true;
